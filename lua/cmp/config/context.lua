@@ -18,7 +18,10 @@ end
 ---@return boolean
 context.in_treesitter_capture = function(capture)
   local highlighter = require('vim.treesitter.highlighter')
-  local ts_utils = require('nvim-treesitter.ts_utils')
+  local ok, ts_utils = pcall(require, 'nvim-treesitter.ts_utils')
+  if not ok then
+    return false
+  end
   local buf = vim.api.nvim_get_current_buf()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   row = row - 1
